@@ -58,6 +58,7 @@ fun LemonadeRollerApp() {
 
 @Composable
 fun ButtonAndImageRoll(modifier: Modifier = Modifier) {
+    var counter by remember { mutableStateOf(1) }
     var result by remember { mutableStateOf(1) }
     val imageResource = when (result) {
         1 -> R.drawable.lemon_tree
@@ -82,10 +83,19 @@ fun ButtonAndImageRoll(modifier: Modifier = Modifier) {
         Button(
             colors = ButtonDefaults.buttonColors(containerColor = Color.Cyan),
             onClick = {
-                if (result == 4){
-                    result = 1
-                }else {
-                    result++
+                when (result) {
+                    2 -> {
+                        if (counter == 4) {
+                            result++
+                        }
+                        counter = (2..4).random()
+                    }
+                    4 -> {
+                        result = 1
+                    }
+                    else -> {
+                        result++
+                    }
                 }
             }) {
             Image(painter = painterResource(id = imageResource), contentDescription = "1")
